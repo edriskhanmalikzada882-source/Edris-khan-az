@@ -1,0 +1,10 @@
+{
+  "name": "IDRIS SUPERMARKET PRO",
+  "short_name": "IDRIS MARKET",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f3f5f9",
+  "theme_color": "#12213b",
+  "lang": "fa",
+  "dir": "rtl"
+}

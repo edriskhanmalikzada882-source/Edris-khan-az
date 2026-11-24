@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12213b"><title>IDRIS SUPERMARKET PRO</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--navy:#12213b;--gold:#d5aa48;--bg:#f3f5f9;--line:#e2e7ef;--muted:#718096}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Tahoma,Arial;color:#1c2940}
+header{background:linear-gradient(120deg,#12213b,#2b4165);color:white;padding:18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.brand{font-size:20px;font-weight:bold}.muted{color:var(--muted);font-size:12px}
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 70px)}nav{background:var(--navy);padding:12px}
+nav button{display:block;width:100%;border:0;background:none;color:#e5ebf5;text-align:right;padding:12px;border-radius:8px;margin:3px 0;font:14px Tahoma}
+nav button.active,nav button:hover{background:#304464;border-right:3px solid var(--gold)}
+main{padding:20px;max-width:1500px;width:100%;margin:auto}.view{display:none}.view.active{display:block}
+h2{font-size:21px;margin:0 0 16px}.panel,.card{background:white;border:1px solid var(--line);border-radius:12px;padding:15px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric{font-size:25px;font-weight:bold;margin-top:8px}
+label{display:block;font-size:13px;margin:10px 0 5px;color:#526078}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d4dce8;border-radius:8px;font:14px Tahoma;background:white}
+textarea{min-height:85px}.formgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+button.action{background:var(--navy);color:white;border:0;border-radius:8px;padding:11px 15px;font:14px Tahoma;cursor:pointer}
+button.gold{background:var(--gold);color:#1c2940}button.danger{background:#fff0f0;color:#b43e3e;border:1px solid #f0cccc}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}td,th{text-align:right;padding:10px 7px;border-bottom:1px solid var(--line)}th{color:var(--muted);background:#f8fafd}
+.scroll{overflow:auto}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.product{border:1px solid var(--line);border-radius:9px;background:white;padding:12px;text-align:right;cursor:pointer}.product b,.product span{display:block}.product span{font-size:12px;color:var(--muted);margin-top:6px}
+.cartline{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.salegrid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.hidden{display:none!important}
+.notice{background:#fff7e2;color:#705615;border-radius:8px;padding:12px;font-size:13px;margin-top:12px}
+#login{position:fixed;inset:0;background:var(--navy);z-index:5;display:flex;align-items:center;justify-content:center;padding:20px}
+.loginbox{background:white;border-radius:15px;padding:24px;width:min(390px,100%);text-align:center}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:18px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}nav{display:flex;overflow:auto;position:sticky;top:0;z-index:2;padding:7px}nav button{white-space:nowrap;width:auto}.grid{grid-template-columns:repeat(2,1fr)}.salegrid{grid-template-columns:1fr}main{padding:12px}.formgrid{grid-template-columns:1fr 1fr}.products{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.formgrid{grid-template-columns:1fr}}
+@media print{header,nav,button,.no-print,footer{display:none!important}.layout{display:block}main{padding:0}.view{display:none!important}#receiptView{display:block!important}}
+</style></head>
+<body>
+<div id="login"><div class="loginbox"><div style="font-size:32px">🛒</div><h2>IDRIS SUPERMARKET PRO</h2><p class="muted" id="loginHint">در اولین ورود، کود مدیر را تعیین کنید</p><label id="pinLabel">کود مدیر</label><input id="pin" type="password" inputmode="numeric" placeholder="۴ تا ۱۲ رقم"><button class="action" style="width:100%;margin-top:12px" onclick="loginAction()">ورود</button><p class="muted" id="loginMsg"></p></div></div>
+<header><div><div class="brand">🛒 IDRIS SUPERMARKET PRO</div><div class="muted" style="color:#dce5f2">سیستم مدیریت سوپرمارکیت</div></div><div id="network">در حال بررسی اتصال...</div></header>
+<div class="layout"><nav class="no-print">
+<button class="active" data-view="dashboard">🏠 داشبورد</button><button data-view="sales">🧾 فروش و صندوق</button><button data-view="items">📦 اجناس</button><button data-view="stock">🏬 گدام</button><button data-view="expenses">💸 مصارف</button><button data-view="reports">📊 گزارش‌ها</button><button data-view="requests">💡 درخواست امکانات</button><button data-view="settings">⚙️ تنظیمات</button>
+</nav><main>
+<section id="dashboard" class="view active"><h2>داشبورد مدیریتی</h2><div class="grid">
+<div class="card"><div class="muted">فروش امروز (معادل پول اصلی)</div><div class="metric" id="todaySales">0</div></div>
+<div class="card"><div class="muted">تعداد رسیدها</div><div class="metric" id="todayCount">0</div></div>
+<div class="card"><div class="muted">تعداد اجناس</div><div class="metric" id="itemCount">0</div></div>
+<div class="card"><div class="muted">اجناس کم‌موجود</div><div class="metric" id="lowCount">0</div></div></div>
+<div class="panel"><h3>آخرین فروش‌ها</h3><div class="scroll"><table><thead><tr><th>تاریخ</th><th>رسید</th><th>مبلغ</th></tr></thead><tbody id="recentSales"></tbody></table></div></div></section>
+<section id="items" class="view"><h2>مدیریت اجناس</h2><div class="panel"><h3>ثبت یا ویرایش جنس</h3><input type="hidden" id="editId"><div class="formgrid">
+<div><label>نام جنس</label><input id="pname"></div><div><label>بارکد</label><input id="pbarcode"></div><div><label>دسته‌بندی</label><input id="pcat"></div>
+<div><label>قیمت خرید</label><input id="pcost" type="number" min="0"></div><div><label>قیمت فروش</label><input id="pprice" type="number" min="0"></div><div><label>واحد</label><select id="punit"><option>دانه</option><option>کیلو</option><option>گرام</option><option>بوجی</option><option>کارتن</option><option>بسته</option><option>لیتر</option></select></div>
+<div><label>موجودی</label><input id="pqty" type="number" min="0" value="0"></div><div><label>حد هشدار</label><input id="pmin" type="number" min="0" value="5"></div></div>
+<div class="row" style="margin-top:12px"><button class="action" onclick="saveProduct()">ذخیره جنس</button><button class="action gold" onclick="scanBarcode()">📷 اسکن با دوربین</button><button class="action" onclick="clearProduct()">پاک‌کردن فورم</button></div><div id="scanArea" class="hidden"><video id="video" width="260" autoplay playsinline></video><button class="action" onclick="stopScan()">بستن</button></div></div>
+<div class="panel"><div class="row between"><h3>فهرست اجناس</h3><input id="itemSearch" style="max-width:250px" placeholder="جستجو..." oninput="renderItems()"></div><div class="scroll"><table><thead><tr><th>نام</th><th>بارکد</th><th>قیمت</th><th>موجودی</th><th>واحد</th><th>عملیات</th></tr></thead><tbody id="itemsBody"></tbody></table></div></div></section>
+<section id="sales" class="view"><h2>فروش و صندوق</h2><div class="salegrid"><div class="panel"><label>جستجوی نام یا بارکد</label><input id="saleSearch" placeholder="نام یا بارکد..." oninput="renderSaleProducts()"><div class="products" id="saleProducts"></div></div><div class="panel"><h3>سبد خرید</h3><div id="cart"></div><label>واحد پول</label><select id="saleCurrency"></select><label>تخفیف</label><input id="discount" type="number" min="0" value="0" oninput="renderCart()"><div class="cartline"><b>مجموع</b><b id="total">0</b></div><label>مبلغ پرداخت‌شده</label><input id="paid" type="number" min="0"><button class="action" style="width:100%;margin-top:12px" onclick="checkout()">ثبت فروش و چاپ رسید</button><button class="action danger" style="width:100%;margin-top:8px" onclick="clearCart()">خالی‌کردن سبد</button></div></div></section>
+<section id="stock" class="view"><h2>موجودی گدام</h2><div class="panel"><div class="scroll"><table><thead><tr><th>جنس</th><th>موجودی</th><th>واحد</th><th>وضعیت</th></tr></thead><tbody id="stockBody"></tbody></table></div></div></section>
+<section id="expenses" class="view"><h2>ثبت مصارف</h2><div class="panel"><div class="formgrid"><div><label>عنوان مصرف</label><input id="exname"></div><div><label>مبلغ</label><input id="examount" type="number" min="0"></div><div><label>واحد پول</label><select id="excurrency"></select></div></div><button class="action" style="margin-top:12px" onclick="addExpense()">ثبت مصرف</button><div class="scroll"><table><thead><tr><th>تاریخ</th><th>عنوان</th><th>مبلغ</th><th>عملیات</th></tr></thead><tbody id="expensesBody"></tbody></table></div></div></section>
+<section id="reports" class="view"><h2>گزارش و پشتیبان‌گیری</h2><div class="panel"><div class="row"><button class="action" onclick="exportCSV()">دانلود گزارش فروش CSV</button><button class="action gold" onclick="backup()">پشتیبان‌گیری کامل JSON</button><label class="action" style="display:inline-block">بازیابی فایل<input type="file" accept=".json,application/json" onchange="restoreBackup(event)" hidden></label></div><div class="notice">نسخه پشتیبان را در جای امن نگهداری کنید. داده‌های این نسخه در حافظه مرورگر همین دستگاه ذخیره می‌شود.</div><div id="reportSummary"></div></div></section>
+<section id="requests" class="view"><h2>درخواست امکانات جدید</h2><div class="panel"><p class="muted">هر زمان امکان تازه یا اصلاحی خواستی، درخواست خود را اینجا ثبت کن.</p><label>عنوان درخواست</label><input id="reqTitle" placeholder="مثلاً بخش عمده‌فروشی"><label>توضیحات</label><textarea id="reqDesc"></textarea><button class="action" style="margin-top:10px" onclick="addRequest()">ثبت درخواست</button><div class="scroll"><table><thead><tr><th>تاریخ</th><th>درخواست</th><th>توضیحات</th><th>عملیات</th></tr></thead><tbody id="requestsBody"></tbody></table></div></div></section>
+<section id="settings" class="view"><h2>تنظیمات سیستم</h2><div class="panel"><h3>امنیت مدیر</h3><label>کود فعلی</label><input id="oldPin" type="password" inputmode="numeric"><label>کود جدید</label><input id="newPin" type="password" inputmode="numeric"><button class="action" onclick="changePin()">تغییر کود مدیر</button></div>
+<div class="panel"><h3>واحدهای پولی</h3><p class="muted">نرخ هر واحد را نسبت به واحد پول اصلی وارد کنید. واحد نخست، پول اصلی است.</p><div class="formgrid"><div><label>نام پول</label><input id="curName" placeholder="مثلاً AFN"></div><div><label>علامت</label><input id="curSymbol" placeholder="؋"></div><div><label>نرخ تبدیل</label><input id="curRate" type="number" min="0.000001" step="any" value="1"></div></div><button class="action" style="margin-top:10px" onclick="addCurrency()">افزودن پول</button><div id="currencyList"></div></div>
+<div class="panel"><h3>مشخصات فروشگاه</h3><label>نام فروشگاه</label><input id="shopName"><label>شماره تماس</label><input id="shopPhone"><button class="action" style="margin-top:10px" onclick="saveSettings()">ذخیره تنظیمات</button></div>
+<div class="notice">توجه: همگام‌سازی آنلاین میان موبایل و کمپیوتر در این نسخه هنوز فعال نیست؛ برای آن سرور و پایگاه داده ابری لازم است. کود فعلی قفل محلی ساده است، نه سامانه امنیتی چندکاربره سرورمحور.</div></section>
+<section id="receiptView" class="view"><h2>رسید فروش</h2><div id="receipt"></div><button class="action no-print" onclick="window.print()">چاپ رسید</button></section>
+<footer>IDRIS SUPERMARKET PRO • نسخه آغازین</footer>
+</main></div><script src="app.js"></script></body></html>
